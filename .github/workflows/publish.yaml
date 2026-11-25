@@ -53,7 +53,7 @@ jobs:
       - name: Archive corresponding sources (LGPL)
         working-directory: ./buildscripts
         run: |
-          tar --exclude-vcs -cJf "$RUNNER_TEMP/eka-libmpv-sources-${GITHUB_REF_NAME}.tar.xz" deps include scripts patches *.sh
+          tar --exclude-vcs -cJf "$RUNNER_TEMP/eka-libmpv-sources-${GITHUB_REF_NAME}.tar.xz" deps include scripts *.sh $(ls -d patches 2>/dev/null)
 
       - name: Build
         working-directory: ./buildscripts
