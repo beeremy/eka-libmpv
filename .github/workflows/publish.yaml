@@ -1,11 +1,11 @@
 name: Publish
 
-# EKA : un tag vX.Y.Z construit l'AAR LGPL et le publie, avec les sources exactes de chaque
+# EKA : un tag eka-N construit l'AAR LGPL et le publie, avec les sources exactes de chaque
 # bibliothèque compilée (obligation de la LGPL), dans une release GitHub de ce dépôt public.
 on:
   push:
     tags:
-      - v*
+      - "eka-*"
 
 permissions:
   contents: write
