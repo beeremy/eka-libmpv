@@ -1,3 +1,18 @@
+# eka-libmpv — libmpv en LGPL pour EKA Player
+
+Fork de [libmpv-android](https://github.com/jarnedemeulemeester/libmpv-android) (licence MIT pour le code du dépôt),
+lui-même basé sur [mpv-android](https://github.com/mpv-android/mpv-android).
+
+**Différences avec l'original** : mpv est construit avec `-Dgpl=false` et FFmpeg sans `--enable-gpl` (avec
+`--enable-version3`, requis par mbedtls). Les bibliothèques sont donc sous **LGPL-3.0-or-later**, liées dynamiquement
+(`.so`) par l'application EKA Player. La compilation échoue si un composant GPL est activé (`CONFIG_GPL`, `HAVE_GPL`).
+Seules les architectures `armeabi-v7a` et `arm64-v8a` sont construites.
+
+Chaque release contient l'AAR, son empreinte SHA-256 et l'archive des **sources exactes** de toutes les
+bibliothèques compilées, avec les scripts et correctifs : de quoi reconstruire et remplacer les bibliothèques.
+
+---
+
 # libmpv for Android
 
 Based on [mpv-android](https://github.com/mpv-android/mpv-android)
@@ -10,8 +25,8 @@ The AAR bundles the following native libraries, which are built by the [buildscr
 
 | Library | Version | License |
 | ------- | ------- | ------- |
-| mpv | 0.42.0 | GPL-2.0-or-later |
-| FFmpeg | 9.0.2 | GPL-3.0-or-later |
+| mpv | 0.42.0 | LGPL-2.1-or-later (construit avec -Dgpl=false) |
+| FFmpeg | 9.0.2 | LGPL-3.0-or-later (sans --enable-gpl) |
 | libplacebo | 7.387.0 | LGPL-2.1-or-later |
 | libass | 0.17.5 | ISC |
 | lua | 5.2.4 | MIT |
@@ -31,4 +46,4 @@ The AAR bundles the following native libraries, which are built by the [buildscr
 
 The source code in this repository is licensed under the [MIT license](LICENSE).
 
-Since `libmpv.so` links against the FFmpeg libraries and other GPL-licensed components, the effective license of the binaries in the AAR is **GPL-3.0-or-later**. Apps distributing the AAR must comply with the terms of that license. See the table above for the licenses of the individual components.
+In this fork, mpv and FFmpeg are built in LGPL mode: the effective license of the binaries in the AAR is **LGPL-3.0-or-later**. freetype is used under the FreeType License. See the table above for the licenses of the individual components.

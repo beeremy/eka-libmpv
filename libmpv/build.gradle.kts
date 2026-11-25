@@ -16,6 +16,9 @@ android {
     defaultConfig {
         minSdk = 26
         consumerProguardFiles("proguard-rules.pro")
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+        }
         externalNativeBuild {
             cmake {
                 arguments += listOf(
@@ -65,8 +68,8 @@ mavenPublishing {
         url = "https://github.com/jarnedemeulemeester/libmpv-android"
         licenses {
             license {
-                name = "GNU General Public License v3.0 or later"
-                url = "https://www.gnu.org/licenses/gpl-3.0.txt"
+                name = "GNU Lesser General Public License v3.0 or later"
+                url = "https://www.gnu.org/licenses/lgpl-3.0.txt"
             }
         }
         developers {
