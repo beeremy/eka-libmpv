@@ -1,0 +1,41 @@
+name: Publish macOS
+
+# EKA pour Mac : un tag eka-mac-N construit libmpv pour macOS (arm64) en LGPL et le publie, avec les sources exactes
+# de chaque bibliothèque compilée (obligation de la LGPL), dans une release GitHub de ce dépôt public.
+on:
+  push:
+    tags:
+      - "eka-mac-*"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Build and publish (macOS arm64)
+    runs-on: macos-15
+    timeout-minutes: 120
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install build tools
+        run: brew install meson ninja nasm pkg-config cmake
+
+      - name: Build
+        run: buildscripts/macos/build.sh "$RUNNER_TEMP/work"
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DIST="$RUNNER_TEMP/work/dist"
+          cp "$DIST/libmpv-macos-arm64.zip" "libmpv-macos-arm64-${GITHUB_REF_NAME}.zip"
+          cp "$DIST/sources-macos.tar.gz" "eka-libmpv-sources-${GITHUB_REF_NAME}.tar.gz"
+          shasum -a 256 "libmpv-macos-arm64-${GITHUB_REF_NAME}.zip" > "libmpv-macos-arm64-${GITHUB_REF_NAME}.zip.sha256"
+          gh release create "$GITHUB_REF_NAME" \
+            "libmpv-macos-arm64-${GITHUB_REF_NAME}.zip" \
+            "libmpv-macos-arm64-${GITHUB_REF_NAME}.zip.sha256" \
+            "eka-libmpv-sources-${GITHUB_REF_NAME}.tar.gz" \
+            --title "eka-libmpv ${GITHUB_REF_NAME} (macOS)" \
+            --notes "libmpv pour EKA Player sur Mac (arm64), construit en LGPL (mpv -Dgpl=false, FFmpeg sans --enable-gpl). Sources exactes jointes."

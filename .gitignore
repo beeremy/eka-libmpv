@@ -10,3 +10,4 @@ obj
 build
 local.properties
 *~
+buildscripts/macos/work/

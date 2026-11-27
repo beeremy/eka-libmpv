@@ -8,6 +8,12 @@ lui-même basé sur [mpv-android](https://github.com/mpv-android/mpv-android).
 (`.so`) par l'application EKA Player. La compilation échoue si un composant GPL est activé (`CONFIG_GPL`, `HAVE_GPL`).
 Seules les architectures `armeabi-v7a` et `arm64-v8a` sont construites.
 
+**Version Mac** (tags `eka-mac-N`) : `buildscripts/macos/build.sh` construit libmpv pour macOS arm64 avec les mêmes
+versions et les mêmes garde-fous LGPL, sans Cocoa (l'app dessine l'image par l'API de rendu OpenGL de libmpv ; décodage
+matériel VideoToolbox avec copie). libmpv et FFmpeg sont des `.dylib` qui se trouvent par `@loader_path` ; libass
+(polices CoreText), libplacebo, dav1d et mbedtls sont liés statiquement dedans. La release contient le zip des
+bibliothèques, son empreinte et l'archive des sources exactes.
+
 Chaque release contient l'AAR, son empreinte SHA-256 et l'archive des **sources exactes** de toutes les
 bibliothèques compilées, avec les scripts et correctifs : de quoi reconstruire et remplacer les bibliothèques.
 
