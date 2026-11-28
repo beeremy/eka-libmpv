@@ -6,6 +6,8 @@ on:
   push:
     tags:
       - "eka-*"
+      # Les tags eka-mac-N publient la version Mac (publish-macos.yaml).
+      - "!eka-mac-*"
 
 permissions:
   contents: write
